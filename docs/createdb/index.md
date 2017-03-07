@@ -48,7 +48,7 @@ Typically this command will prompt you for a password. You need to type in the p
 * Now, using a terminal, navigate to the folder where flightsdb.sql was downloaded and use the following command to populate the database.
 
 ```
-psql -U postgres -c < flightsdb.sql;
+psql -U postgres -d flightdb < flightsdb.sql;
 ```
 
 ### <a name="dbeaver"></a>2. CONNECT TO THE FLIGHTSDB DATABASE USING DBEAVER

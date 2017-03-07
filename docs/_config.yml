@@ -11,7 +11,7 @@ gems:
 #baseurl: "/projectname"
 url: ""
 enforce_ssl: ""
-baseurl: "/seminar"
+baseurl: "/sqlseminar"
 
 # Title of website
 title: Introduction To SQL

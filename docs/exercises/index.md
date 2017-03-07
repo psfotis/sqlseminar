@@ -172,7 +172,7 @@ Each route has a destination and a source airport. Conceptually, we can model th
 **Q28.** For this exercise you will need to construct a SQL query that calculates the Haversine distance from New York City to every airport in the world**.** Note the following:
 
 * The formula for the Haversine distance of two points in the globe with coordinates (lat1, lng2) and (lat2, lng2) is:  
-<img src="/seminar/assets/img/haversine.png" style="width: 750px;"/>
+<img src="/sqlseminar/assets/img/haversine.png" style="width: 750px;"/>
 
 * Assume the (latitude, longitude) of New York City to be: (40.748817, -73.985428)
 * PostgresSQL has built-in the following functions that will be useful for the calculation of the this formula

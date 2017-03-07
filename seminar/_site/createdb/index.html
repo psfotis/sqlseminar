@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Introduction to SQL Seminar - Construct Powerful queries using SQL">
+    <meta name="author" content="Fotis Psallidas" />
+    <meta name="keywords" content="test1, test2, etc">
+        
+    <link rel="icon" href="/seminar/assets/img/favicon.ico">
+    <title>createdb</title>
+    
+    <link rel="alternate" type="application/rss+xml" title="Introduction To SQL - " href="/seminar/feed.xml" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/seminar/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/seminar/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/seminar/assets/css/custom.css" rel="stylesheet">
+    
+    <!-- Styles for 'Syntax Highlighting' of code -->
+    <link href="/seminar/assets/css/syntax.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/seminar/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Facebook OpenGraph tags -->
+    <meta property="og:title" content="createdb" />
+    <meta property="og:type" content="website" />
+
+    
+        <meta property="og:url" content="/createdb/" />
+    
+
+    
+        <meta property="og:image" content="/img/avatar.jpg" />
+    
+</head>
+
+
+<body>
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="">Introduction To SQL</a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li>
+          <a href="/seminar/">Home</a>
+        </li>
+        
+        <li>
+          <a href="/seminar/exercises">Hands On</a>
+        </li>
+        
+        <li>
+          <a href="/seminar/createdb">Create DB</a>
+        </li>
+        
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</nav>
+
+    <div class="container">
+        <div class="jumbotron" style="background-color: #F4FDFD">
+    <p style="text-align: justify">In this tutorial, you will first learn how to create and populate a database. Then, you will learn how tow connect to a database from a database client with a graphical user interface. Finally, you will learn how to explore the schema of the database visually.</p>
+
+    <p>
+    <h2>Contents</h2>
+    <ol>
+    	<li> <a href="#create">CREATE AND POPULATE THE FLIGHTSDB DATABASE</a></li>
+		<li> <a href="#dbeaver">CONNECT TO THE FLIGHTSDB DATABASE USING DBEAVER</a></li>
+		<li> <a href="#explore">EXPLORE THE SCHEMA OF THE DATABASE VISUALLY</a></li>
+	</ol>
+	</p>
+</div>
+
+<h3 id="1-create-and-populate-the-flightsdb-database"><a name="create"></a>1. CREATE AND POPULATE THE FLIGHTSDB DATABASE</h3>
+
+<p><strong>Step 1.</strong> Open a terminal and run the following command to create the flightsdb database**</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>psql -U postgres -c "CREATE DATABASE flightsdb";
+</code></pre>
+</div>
+
+<p>Explanation:</p>
+
+<ul>
+  <li>
+    <p>psql is a command line utility that serves as a database client. It was installed in your system along with PostgresSQL.</p>
+  </li>
+  <li>
+    <p>the <strong>-c</strong> option sets the SQL query we want to run against the database. In this case, <strong>CREATE DATABASE flightsdb</strong> creates a new database with name <strong>flightsdb</strong>.</p>
+  </li>
+  <li>
+    <p>the <strong>-U</strong> option sets the user on whose behalf we run the query. In this case, <strong>postgres</strong> is the user that you should have created during the installation of the PostgresSQL server. If you set a different user name then use the one you specified instead of postgres.</p>
+  </li>
+</ul>
+
+<p>Typically this command will prompt you for a password. You need to type in the password you set during the installation.</p>
+
+<p><strong>Step 2.</strong> Populate the database</p>
+
+<ul>
+  <li>
+    <p>Download the <code class="highlighter-rouge">flightsdb.sql</code> file from</p>
+  </li>
+  <li>
+    <p>Now, using a terminal, navigate to the folder where flightsdb.sql was downloaded and use the following command to populate the database.</p>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>psql -U postgres -c &lt; flightsdb.sql;
+</code></pre>
+</div>
+
+<h3 id="2-connect-to-the-flightsdb-database-using-dbeaver"><a name="dbeaver"></a>2. CONNECT TO THE FLIGHTSDB DATABASE USING DBEAVER</h3>
+
+<p><strong>Step 1.</strong> Open DBeaver and then go under <strong>File → New</strong>.</p>
+
+<p><img src="https://amalgam.quip.com/-/blob/YWQAAAHaltL/j1ZEhNpWKSO_-L5zO_Qsfg" alt="alt text" /></p>
+
+<p><strong>Step 2.</strong> In the <code class="highlighter-rouge">Select a wizard</code> window that opens up select <strong>DBeaver → Database Connection</strong> and press <strong>Next.</strong></p>
+
+<p><img src="https://amalgam.quip.com/-/blob/YWQAAAHaltL/uFlhyiHqbFZKiVxUxqz75g" alt="alt text" /></p>
+
+<p><strong>Step 3.</strong> In the <code class="highlighter-rouge">Select new connection type</code> wizard that opens up select PostgresSQL and press <strong>Next</strong>.</p>
+
+<p><img src="https://amalgam.quip.com/-/blob/YWQAAAHaltL/AmpdXFuLF3STH9xHF47nbw" alt="alt text" /></p>
+
+<p><strong>Step 4.</strong> Now, the <code class="highlighter-rouge">PostgresSQL Connection Settings</code> wizard opens up.</p>
+
+<ul>
+  <li>
+    <p>In the Database field enter <strong>flightsdb</strong></p>
+  </li>
+  <li>
+    <p>In the User and Password fields enter the user and  password that you used to create the flights database (e.g., User: postgres and Password: postgres if you followed the default installation of PostgreSQL).</p>
+  </li>
+</ul>
+
+<p><img src="https://amalgam.quip.com/-/blob/YWQAAAHaltL/Gk2_tJjzJ9JpMVfTQ-3vdg" alt="alt text" /></p>
+
+<p><strong>Step 5.</strong> In the <code class="highlighter-rouge">Network wizard</code> that opens up just press <strong>Next</strong>.</p>
+
+<p><img src="https://amalgam.quip.com/-/blob/YWQAAAHaltL/FNaVByeeAp4Ra2CUL57klA" alt="alt text" /></p>
+
+<p><strong>Step 6.</strong> This opens up the <code class="highlighter-rouge">Finish connection creation wizard</code>. Press <strong>Finish</strong> to create the connection.</p>
+
+<p><img src="https://amalgam.quip.com/-/blob/YWQAAAHaltL/A4yLtZRC2nbdVyyYV-oHfA" alt="alt text" /></p>
+
+<p><strong>Step 7.</strong> If everything went fine so far, then at the left hand side on the connections pane a new entry <code class="highlighter-rouge">Postgres - flightsdb</code> has been created. Double click on the entry to establish an actual connection to the PostgresSQL server. Incidentally, a new SQL editor to write our queries is also created.</p>
+
+<p><img src="https://amalgam.quip.com/-/blob/YWQAAAHaltL/bnnl_EEnhqx_J5qWSAeFPQ" alt="alt text" /></p>
+
+<h3 id="3-explore-the-schema-of-the-database"><a name="explore"></a>3. EXPLORE THE SCHEMA OF THE DATABASE</h3>
+
+<p>Having established the connection with the PostgreSQL server in DBeaver, we are now set to start issuing queries. But we don’t even know the schema of the database yet.</p>
+
+<p><strong>Solution 1.</strong> Explore the schema using the connection pane on the left hand side.</p>
+
+<ul>
+  <li>
+    <p>On the left hand side on the connection pane click the arrow next to the <code class="highlighter-rouge">PostgresSQL - flightsdb</code> entry.</p>
+  </li>
+  <li>
+    <p>In the drop down list that appears follow the path <strong>flightsdb</strong>→ <strong>Schemas</strong>→ <strong>public</strong>→ <strong>Tables</strong>. Under <strong>Tables</strong>, we can see all the tables that exist in the database.</p>
+  </li>
+  <li>
+    <p>Now, if we click on the arrow of a table we can also see the columns of the table. Using this traversal exhaustively we can effectively explore the schema of the database. Typically, the names of tables and columns are indicative of their actual meaning.</p>
+  </li>
+</ul>
+
+<p><strong>Solution 2.</strong> Create a diagram of the database.</p>
+
+<ul>
+  <li>
+    <p>Another graphical way to explore the schema of the database is by creating a diagram from the actual database.</p>
+  </li>
+  <li>
+    <p>Follow the path <strong>flightsdb</strong> → <strong>Schemas</strong> as above.</p>
+  </li>
+  <li>
+    <p>Right click on <strong>Schemas</strong>. Then, select the <strong>View Schemas</strong> option.</p>
+  </li>
+  <li>
+    <p>At the right hand side two tabs, namely, Properties and Diagram, have opened up.</p>
+  </li>
+  <li>
+    <p>Click on the <code class="highlighter-rouge">Diagram</code> tab. In this visual, we can see, among others, the tables of the database, their columns, and the Primary Key - Foreign Key relationships effectively getting a better understanding of the schema.</p>
+  </li>
+</ul>
+
+    </div>
+
+    <footer class="footer">
+  <div class="container footerBox">
+  </div>
+</footer> 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/seminar/assets//js/jquery.min.js"><\/script>')
+</script>
+<script src="/seminar/assets/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/seminar/assets//js/ie10-viewport-bug-workaround.js"></script>
+</body>
+
+</html>

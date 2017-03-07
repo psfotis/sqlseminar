@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Introduction to SQL Seminar - Construct Powerful queries using SQL">
+    <meta name="author" content="Fotis Psallidas" />
+    <meta name="keywords" content="test1, test2, etc">
+        
+    <link rel="icon" href="/seminar/assets/img/favicon.ico">
+    <title>Introduction To SQL</title>
+    
+    <link rel="alternate" type="application/rss+xml" title="Introduction To SQL - " href="/seminar/feed.xml" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/seminar/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/seminar/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/seminar/assets/css/custom.css" rel="stylesheet">
+    
+    <!-- Styles for 'Syntax Highlighting' of code -->
+    <link href="/seminar/assets/css/syntax.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/seminar/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Facebook OpenGraph tags -->
+    <meta property="og:title" content="Introduction To SQL" />
+    <meta property="og:type" content="website" />
+
+    
+        <meta property="og:url" content="/exercises/" />
+    
+
+    
+        <meta property="og:image" content="/img/avatar.jpg" />
+    
+</head>
+
+
+<body>
+    <!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="">Introduction To SQL</a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li>
+          <a href="/seminar/">Home</a>
+        </li>
+        
+        <li>
+          <a href="/seminar/exercises">Hands On</a>
+        </li>
+        
+        <li>
+          <a href="/seminar/createdb">Create DB</a>
+        </li>
+        
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</nav>
+
+    <div class="container">
+        <div class="jumbotron" style="background-color: #F4FDFD">
+<p style="font-size: 11pt; text-align: justify">
+Lets start querying the flightsdb. In this page you will find many questions that you need
+to translate to SQL queries and run against the flightsdb database. The questions are categorized into 6 sections:
+</p>
+
+<ol>
+<li><a href="#s1">GET FAMILIAR WITH THE CONTENTS OF THE DATABASE</a></li>
+<li><a href="#s2">INTERESTING FACTS USING SIMPLE <code class="highlighter-rouge">SELECT-FROM-WHERE</code> QUERIES</a></li>
+<li><a href="#s3">USE <code class="highlighter-rouge">JOINS</code> FOR POWERFUL INSIGHTS</a></li>
+<li><a href="#s4">USE SQL FOR MEANINGFUL ANALYSIS</a></li>
+<li><a href="#s5">GRAPH ANALYTICS USING SQL</a></li>
+<li><a href="#s6">COMPLICATED MATHEMATICAL CALCULATIONS USING SQL</a></li>
+</ol>
+
+<p style="font-size: 11pt; text-align: justify">
+The questions vary in complexity. Make sure to answer the following questions: <b>Q1-Q9, Q13-Q16, Q21-Q24</b>. The rest of the questions require some familiarity with SQL. So, target them if you finish the questions above. 
+<br /><br />
+<span style="color:red; font-weight:bolder;">Note</span>: You do not need to finish all questions during the hands-on session. Whichever questions you do not reply, try to answer them at your own convenience. Let the instructor know for any of your questions over email.
+</p>
+</div>
+
+<p>For your convenience, following is the schema of the flightsdb database with explanation of the columns:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>TABLE airlines (
+   alid integer PRIMARY KEY,      -- Id of the airline
+   name text,                     -- Name of the airline
+   iata varchar(2),               -- 2-letter IATA code. empty or null if not assigned/unknown 
+   icao varchar(3),               -- 3-letter ICAO code. empty or null if not assigned
+   callsign text,                 -- Airline callsign
+   country text,                  -- Country or territory where airline is incorporated
+   active varchar(2)              -- "Y" if the airline is or has until recently been operational,
+                                  -- "N" if it is defunct.
+);
+
+
+TABLE airports (
+   apid integer PRIMARY KEY,      -- Id of the airport
+   name text NOT NULL,            -- Name of airport
+   city text,                     -- Main city served by airport
+   country text,                  -- Country or territory where airport is located
+   x double precision,            -- Latitude of airport: Decimal degrees, usually to six
+                                  -- significant digits. Negative is South, positive is North
+   y double precision,            -- Longitude of airport: Decimal degrees, usually to six 
+                                  -- significant digits. Negative is West, positive is East
+   elevation bigint,              -- Altitude of airport measured in feets
+   iata character varchar(3),     -- 3-letter IATA code. empty or null if not assigned/unknown
+   icao character varchar(4)      -- 4-letter ICAO code. empty or null if not assigned
+   
+);
+
+TABLE routes (
+   rid integer PRIMARY KEY,
+   dst_apid integer,              -- Id of destination airport
+   dst_ap varchar(4),             -- 3-letter (IATA) or 4-letter (ICAO) code of the destination airport
+   src_apid bigint,               -- Id of source airport
+   src_ap varchar(4),             -- 3-letter (IATA) or 4-letter (ICAO) code of the source airport
+   alid bigint,                   -- 2-letter (IATA) or 3-letter (ICAO) code of the airline
+   airline varchar(4),            -- 2-letter (IATA) or 3-letter (ICAO) code of the airline
+   codeshare text                 -- "Y" if this flight is a codeshare (that is, not operated by 
+                                  -- Airline, but another carrier), empty otherwise
+);
+</code></pre>
+</div>
+
+<h3 id="1-get-familiar-with-the-contents-of-the-database"><a name="s1"></a>1. GET FAMILIAR WITH THE CONTENTS OF THE DATABASE</h3>
+
+<p><strong>Q1. To get familiar with the contents of the database, use the <code class="highlighter-rouge">SELECT * FROM TABLE</code> query construct for each table in the database (i.e., airlines, airports, routes)</strong></p>
+
+<p><strong>A1.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT * FROM airports;
+
+SELECT * FROM airlines;
+
+SELECT * FROM routes;
+</code></pre>
+</div>
+
+<p><strong>Q2. Most likely, from the results of Q1 you got overwhelmed from the multiple attributes in each table.  Use the <code class="highlighter-rouge">SELECT column1, column2, .., columnN FROM TABLE</code> construct to limit the attributes that you see in the result. In particular, write SQL queries:</strong></p>
+
+<p>a. to project only the name, city, and country of each airport.</p>
+
+<p>b. to project only the name of an airline, the country where the airline is incorporated, and if it is still active.</p>
+
+<p>c. to project only the names and ids of the source and destination airports along with the number of stops in  the routes table.</p>
+
+<p><strong>A2.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-- A2.a.
+SELECT name, city, country
+FROM   airports;
+
+
+-- A2.b.
+SELECT name, country, active
+FROM   airlines;
+
+-- A2.c.
+
+SELECT src_apid, src_ap, dst_apid, dst_ap, stops
+FROM   routes; 
+</code></pre>
+</div>
+
+<h3 id="2-interesting-facts-using-simple-select-from-where-queries"><a name="s2"></a>2. INTERESTING FACTS USING SIMPLE <code class="highlighter-rouge">SELECT-FROM-WHERE</code> QUERIES</h3>
+
+<p><strong>Q3. Find the name, city, country, and altitude (or elevation) of the JFK airport.</strong> Hint: We need to find the record with iata=’JFK’ in the airports table and project only the name, city, country, and elevation attributes.</p>
+
+<p><strong>A3.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT name, city, country, elevation
+FROM   airports
+WHERE  iata = 'JFK';
+</code></pre>
+</div>
+
+<p><strong>Q4. Find the routes operated by American Airlines that are codeshared.</strong> Hint: we need the records in the routes table with airline=’AA’ and codeshare=’Y’.</p>
+
+<p><strong>A4.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT * 
+FROM   routes 
+WHERE  airline = 'AA' AND codeshare='Y';
+</code></pre>
+</div>
+
+<p><strong>Q5. Find the airports located in Cuba or Argentina.</strong></p>
+
+<p><strong>A5.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT * 
+FROM   airports 
+WHERE  country = 'Cuba' OR country = 'Argentina';
+</code></pre>
+</div>
+
+<p><strong>Q6. Find the airlines whose name starts with ‘Orbit’.</strong> Hint: you need to use the <code class="highlighter-rouge">LIKE</code> operator on the name attribute of the airports table.</p>
+
+<p><strong>A6.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT *
+FROM   airlines
+WHERE  name LIKE 'Orbit%'
+</code></pre>
+</div>
+
+<p><strong>Q7. Find the airports within a bounding box.</strong> For this exercise you will need to find the airports with latitude (i.e., attribute <code class="highlighter-rouge">x</code> in the airports table) and longitude (i.e., attribute <code class="highlighter-rouge">y</code> in the airports table) within the bounding box <code class="highlighter-rouge">[-74.2589, 40.4774, -73.7004, 40.9176]</code>. What this means is that we need <code class="highlighter-rouge">y</code> to be within <code class="highlighter-rouge">[-74.2589, -73.7004]</code> and <code class="highlighter-rouge">x</code> within <code class="highlighter-rouge">[40.4774, 40.9176]</code>.</p>
+
+<p><strong>A7.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT * 
+FROM   airports 
+WHERE  -74.2589 &lt; x AND x &lt; -73.7004 AND
+       40.4774  &lt; y AND y &lt; 40.9176;
+</code></pre>
+</div>
+
+<h3 id="3-use-joins-for-powerful-insights"><a name="s3"></a>3. USE <code class="highlighter-rouge">JOINS</code> FOR POWERFUL INSIGHTS</h3>
+
+<p><strong>Q8. Find the routes with destination airport in Italy.</strong></p>
+
+<p><strong>A8.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT *
+FROM   routes, airports 
+WHERE  routes.dst_apid = airports.apid AND
+       country = 'Italy';
+</code></pre>
+</div>
+
+<p><strong>Q9. Extend the query of Q9 to return routes with destination airport in Italy operated by the airline with name ‘American Airlines’.</strong></p>
+
+<p><strong>A9.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT *
+FROM  routes, airports, airlines
+WHERE routes.dst_apid = airports.apid AND
+      airports.country = 'Italy' AND
+      routes.alid=airlines.alid AND
+      airlines.name='American Airlines';
+</code></pre>
+</div>
+
+<p><strong>Q10. Find the domestic routes.</strong> A domestic route needs to have a source and destination airport in the same country. For each route project the names of the source and destination airports. Hint: You will need to use two different instances of the airports table. One to join with the routes.src_apid and another one to join with routes.dst_apid.</p>
+
+<p>More specifically, your SQL query will have the following structure:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT ...
+FROM   routes, airports AS A1, airports AS A2
+WHERE  ...
+</code></pre>
+</div>
+
+<p>Make sure that you understand why we need two instances of the airports table.</p>
+
+<p><strong>A10.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT  A1.name AS source_airport,
+        A2.name as destination_airport
+FROM    routes, 
+        airports AS A1,
+        airports AS A2
+WHERE   A1.apid = src_apid AND             
+        A2.apid = dst_apid AND             
+        A1.country = A2.country;          -- domestic route
+</code></pre>
+</div>
+
+<p><strong>Q11. Similarly to Q6, find the routes that are international.</strong> International routes should not have source and destination airports in the same country. Furthermore, we only need the international routes operated by ‘American Airlines’. Make sure to avoid the routes with empty airlines.</p>
+
+<p><strong>A11.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT  airlines.name AS airline, 
+        A1.name AS source_airport,
+        A2.name as destination_airport
+FROM    routes, 
+        airlines, 
+        airports AS A1,
+        airports AS A2
+WHERE   routes.airline = airlines.iata AND
+        routes.airline != '' AND            -- avoid empty airlines
+        airlines.iata='AA' AND
+        A1.apid = src_apid AND             
+        A2.apid = dst_apid AND             
+        A1.country != A2.country;           -- international route
+</code></pre>
+</div>
+
+<p><strong>Q12. Find the routes from the United States to Canada operated by American Airlines.</strong></p>
+
+<p><strong>A12.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT  airlines.name AS airline, 
+        A1.name AS source_airport,
+        A2.name as destination_airport
+FROM    routes, 
+        airlines, 
+        airports AS A1,
+        airports AS A2
+WHERE   routes.airline = airlines.iata AND  
+        routes.airline != '' AND
+        airlines.iata='AA' AND
+        A1.apid = src_apid AND
+        A2.apid = dst_apid AND
+        A1.country = 'Canada' AND
+        A2.country = 'United States'
+</code></pre>
+</div>
+
+<h3 id="4-use-sql-for-meaningful-analysis"><a name="s4"></a>4. USE SQL FOR MEANINGFUL ANALYSIS</h3>
+
+<p><strong>Q13. How many airports are there per country? Order the countries by decreasing number of airports.</strong></p>
+
+<p><strong>A13.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT   COUNT(*), country
+FROM     airports
+GROUP BY country
+ORDER BY COUNT(*) DESC;
+</code></pre>
+</div>
+
+<p><strong>Q14. How many airports are there per city in the United States? Order the cities by decreasing number of airports and project only the cities. Use the <code class="highlighter-rouge">HAVING</code> clause to return only the cities with more than 3 airports.</strong></p>
+
+<p><strong>A14.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT   COUNT(*), city 
+FROM     airports
+WHERE    country = 'United States'
+GROUP BY city
+HAVING   COUNT(*) &gt; 3
+ORDER BY COUNT(*) DESC;
+</code></pre>
+</div>
+
+<p><strong>Q15. Find the number of routes for each source airport. Project only the number of routes and corresponding id of the airport (i.e., src_apid). Order the results by decreasing number of routes.</strong></p>
+
+<p><strong>A15.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT COUNT(*), src_apid
+FROM routes 
+GROUP BY src_apid
+ORDER BY count(*) desc;
+</code></pre>
+</div>
+
+<p><strong>Q16. Find the average,  max, min, and standard deviation of routes operated by American Airlines across cities in the United States. You need to account only for routes with source airport located in a city in the United States.</strong> Hint: First, write a SQL query to find the number of routes per city in the United States operated by American Airlines. Again, account only for routes with source airport located in a city in the United States. Then, use this query as a nested subquery to calculate the average, max, min, and standard deviation.</p>
+
+<p><strong>A16.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT AVG(cnt), MAX(cnt), MIN(cnt), STDDEV(cnt) 
+FROM ( 
+    SELECT   COUNT(*) as cnt, city
+    FROM     routes, airports
+    WHERE    routes.src_apid = airports.apid AND
+             airline = 'AA' AND
+             country = 'United States'
+    GROUP BY city
+) AS S;
+</code></pre>
+</div>
+
+<p><strong>Q17. Find the number of routes that have as destination the JFK airport.</strong></p>
+
+<p><strong>A17.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT   COUNT(*), dst_apid, airports.name 
+FROM     routes, airports 
+WHERE    dst_apid = airports.apid AND
+         airports.iata = 'JFK'
+GROUP BY dst_apid, airports.name;
+</code></pre>
+</div>
+
+<p><strong>Q18. How many routes are domestic and how many routes are international?</strong></p>
+
+<p><strong>A18.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>-- domestic
+SELECT COUNT(*) AS domestic_routes FROM (
+    SELECT  A1.name AS source_airport,
+            A2.name as destination_airport
+    FROM    routes,
+            airports AS A1,
+            airports AS A2
+    WHERE   A1.apid = src_apid AND
+            A2.apid = dst_apid AND
+            A1.country = A2.country;
+) AS S
+
+-- international 
+SELECT COUNT(*) AS international_routes FROM (
+    SELECT  A1.name AS source_airport,
+            A2.name as destination_airport
+    FROM    routes,
+            airports AS A1,
+            airports AS A2
+    WHERE   A1.apid = src_apid AND
+            A2.apid = dst_apid AND
+            A1.country != A2.country;
+) AS S
+</code></pre>
+</div>
+
+<p><strong>Q19. Find the source airports with amount of routes above the average number of routes for all source airports.</strong></p>
+
+<p><strong>A19.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT   COUNT(*), airports.name                      
+FROM     airports, routes
+WHERE    airports.apid = routes.src_apid
+GROUP BY airports.apid
+HAVING COUNT(*) &gt; (
+         SELECT AVG(cnt) 
+         FROM (
+             SELECT COUNT(*) AS cnt
+             FROM routes, airports
+             WHERE routes.src_apid = airports.apid
+             GROUP BY apid
+         )AS S
+       );
+</code></pre>
+</div>
+
+<p><strong>Q20. Find the route with the most airlines. Assume there is only one route with the most airlines. Then, write another SQL query to find the names of the airlines in this route.</strong></p>
+
+<p><strong>A20.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT   COUNT(DISTINCT airlines.name) AS cnt, src_apid, dst_apid 
+FROM     routes, airlines
+WHERE    airlines.alid = routes.alid
+GROUP BY src_apid, dst_apid
+ORDER BY cnt DESC
+LIMIT 1;
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT DISTINCT airlines.name
+FROM (
+       SELECT   COUNT(DISTINCT airlines.name) AS cnt, src_apid, dst_apid 
+       FROM     routes, airlines
+       WHERE    airlines.alid = routes.alid
+       GROUP BY src_apid, dst_apid
+       ORDER BY cnt DESC
+       LIMIT 1
+     ) AS most_airlines_route, routes, airlines
+WHERE routes.src_apid = most_airlines_route.src_apid AND
+      routes.dst_apid = most_airlines_route.dst_apid AND
+      airlines.alid = routes.alid
+</code></pre>
+</div>
+
+<h3 id="5-graph-analytics-using-sql"><a name="s5"></a>5. GRAPH ANALYTICS USING SQL</h3>
+
+<p>Each route has a destination and a source airport. Conceptually, we can model the routes as a directed graph, where nodes correspond to individuals airports and directed edges denote routes between nodes. Similarly, we can also conceptually model routes between cities or countries as a directed graphs. Each city is a node that corresponds to all airports in that city. Similarly, each country corresponds to a node that corresponds to all airports in that country.</p>
+
+<p><strong>Q21. Write 2 SQL queries that calculate the in- and out-degree for each airport, respectively.</strong> The in-degree of an airport is the number of times that it was a destination in a route. Similarly, the out-degree is the number of times it was a source in a route. For each query, return the in- or out-degree, the id of the source or destination airport, and the name of the airport. Finally, order the results by the in- or out-degree.</p>
+
+<p><strong>A21.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>-- out-degree
+SELECT   COUNT(*) AS out_degree, src_apid, airports.name 
+FROM     routes, airports 
+WHERE    routes.src_apid = airports.apid 
+GROUP BY src_apid, airports.name
+ORDER BY out_degree DESC;
+
+-- in-degree
+SELECT   COUNT(*) AS in_degree, dst_apid, airports.name 
+FROM     routes, airports 
+WHERE    routes.dst_apid = airports.apid 
+GROUP BY dst_apid, airports.name
+ORDER BY in_degree DESC;
+</code></pre>
+</div>
+
+<p><strong>Q22. Similarly to Q21, calculate the in- and out-degree for each city.</strong></p>
+
+<p><strong>A22.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>-- out-degree
+SELECT count(*) AS out_degree, airports.city 
+FROM routes, airports 
+WHERE routes.src_apid = airports.apid 
+GROUP BY airports.city
+ORDER BY out_degree desc;
+
+-- in-degree
+SELECT count(*) AS in_degree, airports.city 
+FROM routes, airports 
+WHERE routes.dst_apid = airports.apid 
+GROUP BY airports.city
+ORDER BY in_degree desc;
+</code></pre>
+</div>
+
+<p><strong>Q23. Calculate the in- and out-degree for each country.</strong></p>
+
+<p><strong>A23.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>-- out-degree
+SELECT count(*) AS out_degree, airports.country 
+FROM routes, airports 
+WHERE routes.src_apid = airports.apid 
+GROUP BY airports.country
+ORDER BY out_degree desc;
+
+-- in-degree
+SELECT count(*) AS in_degree, airports.country 
+FROM routes, airports 
+WHERE routes.dst_apid = airports.apid 
+GROUP BY airports.country
+ORDER BY in_degree desc;
+</code></pre>
+</div>
+
+<p><strong>Q24. Which city is the most prestigious destination?</strong> Hint: we need to find the city with the highest in-degree. Assume there is only one city with the highest in-degree.</p>
+
+<p><strong>A24.</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT count(*) AS in_degree, airports.city 
+FROM routes, airports 
+WHERE routes.dst_apid = airports.apid 
+GROUP BY airports.city
+ORDER BY in_degree desc
+LIMIT 1;
+</code></pre>
+</div>
+
+<p><strong>Q25. Which countries are the least prestigious destinations?</strong> As oppose to Q4, where there was only one city with the highest in-degree, now there are ties (i.e., multiple countries with the same least amount of in-degree.). To construct this query, you need to use the <code class="highlighter-rouge">HAVING</code> clause. We need to return all countries who <em>have</em> in-degree equal to the minimum in-degree among all countries.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT   COUNT(*) AS in_degree, airports.country
+FROM     routes, airports 
+WHERE    routes.dst_apid = airports.apid 
+GROUP BY airports.country 
+HAVING   COUNT(*) = (
+                      SELECT MIN(in_degree)
+                      FROM (
+                            SELECT  COUNT(*) AS in_degree, airports.country 
+                            FROM    routes, airports
+                            WHERE   routes.dst_apid = airports.apid
+                            GROUP BY airports.country
+                      ) AS in_degrees
+                    );
+</code></pre>
+</div>
+
+<p><strong>Q26. Find the airports that are 2 hops away.</strong> This means there is no direct route from airport A to C but there is at least a route from A → B and another route from B → C. So, to get from A to B we need to go through C. In the routes table there is an attribute called stops indicating that this route has an intermediate stop. For this exercise, assume there is no intermediate stop and every route in the routes table is direct.</p>
+
+<p><strong>Q27. Find the airports that are 3 hops away.</strong> Similarly to Q6, but now we want the airports A and D for which there are airports B and C such that there are routes A → B, B → C, and C → D. Of course there are no direct or 2-hops routes from A to D.</p>
+
+<p><strong>Q28. Can we write a general purpose SQL query to find the airports that are N hops away, based on what we discussed in class and the way you answered Q6 and Q7?</strong></p>
+
+<ul>
+  <li><strong>Hint 1</strong>: No, we can’t. In general, we can construct a query if someone gives a number for N. But we can’t construct a SQL query for any N. Can you tell why?</li>
+  <li><strong>Hint 2</strong>: To support such kind of queries, SQL has introduced constructs for recursive computation (i.e., recursive functions and WITH RECURSIVE constructs) that we did not cover in class. With the introduction of recursive constructs in SQL we can compute anything we may want. Why would we need a recursive computation in this example?</li>
+</ul>
+
+<h3 id="6-complicated-mathematical-calculations-using-sql"><a name="s6"></a>6. COMPLICATED MATHEMATICAL CALCULATIONS USING SQL</h3>
+
+<p><strong>Q29.</strong> For this exercise you will need to construct a SQL query that calculates the Haversine distance from New York City to every airport in the world<strong>.</strong> Note the following:</p>
+
+<ul>
+  <li>
+    <p>The formula for the Haversine distance of two points in the globe with coordinates (lat1, lng2) and (lat2, lng2) is:<br />
+<img src="/seminar/assets/img/haversine.png" style="width: 750px;" /></p>
+  </li>
+  <li>Assume the (latitude, longitude) of New York City to be: (40.748817, -73.985428)</li>
+  <li>PostgresSQL has built-in the following functions that will be useful for the calculation of the this formula
+    <ul>
+      <li>RADIANS(x): converts a number x to radians,</li>
+      <li>COS(x): computes the cosine of x,</li>
+      <li>SIN(x): computes the sine of x,</li>
+      <li>SQRT(x): computes the square root of x,</li>
+      <li>ATAN2(x, y): inverse tangent of x/y</li>
+    </ul>
+  </li>
+  <li>Also, PostgresSQL supports <strong>+</strong>, <strong>*</strong>, and <strong>^</strong> for addition, multiplication, and power, respectively.</li>
+  <li>To construct the query that calculates the haversine distance, use the x (i.e., latitude) and y (i.e., longitude) coordinates of the airports and the (latitude, longitude) of New York City.</li>
+  <li>To calculate the squares of the sines of the differences of latitudes and longitudes as calculated in the distance above, we can do the following:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT sin(radians(y-40.748817)/2.0)^2.0, sin(radians(x+73.985428)/2.0)^2.0
+FROM airports
+</code></pre>
+</div>
+
+<p>Continue the construction of the SQL query for the Haversine distance. Along with the distance, project the name, country, and city of the airport. Hint: Instead of recalculating the <strong>a</strong> parameter twice for the calculation of parameter <strong>c</strong> use a nested subquery.</p>
+
+<p><strong>A29.</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT 2 * atan2(A.a, sqrt(1-A.a)) * 6371000.0 as d,
+       name, country, city 
+FROM (
+    SELECT sin(radians(y-40.748817)/2.0)^2.0 + 
+                cos(radians(y))*
+                cos(radians(40.748817))*
+                sin(radians(x+73.985428)/2.0)^2.0 AS a, name, country, city
+    FROM airports) AS A 
+ORDER BY d asc;
+</code></pre>
+</div>
+
+    </div>
+
+    <footer class="footer">
+  <div class="container footerBox">
+  </div>
+</footer> 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/seminar/assets//js/jquery.min.js"><\/script>')
+</script>
+<script src="/seminar/assets/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/seminar/assets//js/ie10-viewport-bug-workaround.js"></script>
+</body>
+
+</html>

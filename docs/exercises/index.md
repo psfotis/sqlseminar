@@ -63,10 +63,15 @@ TABLE routes (
    src_ap varchar(4),             -- 3-letter (IATA) or 4-letter (ICAO) code of the source airport
    alid bigint,                   -- 2-letter (IATA) or 3-letter (ICAO) code of the airline
    airline varchar(4),            -- 2-letter (IATA) or 3-letter (ICAO) code of the airline
-   codeshare text                 -- "Y" if this flight is a codeshare (that is, not operated by 
+   codeshare text,                -- "Y" if this flight is a codeshare (that is, not operated by 
                                   -- Airline, but another carrier), empty otherwise
+
+   FOREIGN KEY (dst_apid) REFERENCES airports(apid),
+   FOREIGN KEY (src_apid) REFERENCES airports(apid),
+   FOREIGN KEY (alid)     REFERENCES airlines(alid)
 );
-Note that the above is a subset of the schema of the actual OpenFlights database
+Note that the above is a subset of the schema of the actual OpenFlights database. 
+Q0. Some domains above can be optimized. Can you suggest some other domains? Answer this question at your own convinience after the hands-on session. 
 ```
 
 ### <a name="s1"></a><u>1. GET FAMILIAR WITH THE CONTENTS OF THE DATABASE</u>

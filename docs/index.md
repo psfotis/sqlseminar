@@ -54,6 +54,6 @@ Fotis Psallidas is a PhD Candidate in the Computer Science department supervised
 
 <ul>
     <li> Email: <b>fotis@cs.columbia.edu</b></li>
-    <li> Website: <a href="www.cs.columbia.edu/~fotis">www.cs.columbia.edu/~fotis</a></li>
+    <li> Website: <a href="https://www.cs.columbia.edu/~fotis">www.cs.columbia.edu/~fotis</a></li>
 </ul>
 </div>

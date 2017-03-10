@@ -34,7 +34,7 @@ nav-links:
 #  About Me: "aboutme"
 #  Contact: "contact"
   Hands On: "exercises" 
-  Create DB: "createdb"
+  Download DB: "createdb"
   Solutions: "solutions"
   
 # --- Footer options --- #

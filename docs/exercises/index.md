@@ -25,7 +25,7 @@ The questions vary in complexity. Make sure to answer the following questions: <
 </p>
 </div>
 
-For your convenience, following is the schema of the flightsdb database with explanation of the columns:
+For your convenience, following is the schema of the OpenFlights database with explanation of the columns:
 
 ```
 TABLE airlines (
@@ -66,6 +66,7 @@ TABLE routes (
    codeshare text                 -- "Y" if this flight is a codeshare (that is, not operated by 
                                   -- Airline, but another carrier), empty otherwise
 );
+Note that the above is a subset of the schema of the actual OpenFlights database
 ```
 
 ### <a name="s1"></a><u>1. GET FAMILIAR WITH THE CONTENTS OF THE DATABASE</u>

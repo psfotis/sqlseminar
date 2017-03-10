@@ -79,7 +79,7 @@ a. to project only the name, city, and country of each airport.
 
 b. to project only the name of an airline, the country where the airline is incorporated, and if it is still active.
 
-c. to project only the names and ids of the source and destination airports along with the number of stops in  the routes table.
+c. to project only the names and ids of the source and destination airports from the routes table.
 
 <br/><br/>
 ### <a name="s2"></a><u>2. INTERESTING FACTS USING SIMPLE SELECT-FROM-WHERE QUERIES</u>

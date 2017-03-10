@@ -50,7 +50,7 @@ layout: template1
 
 <h2>Workshop Facilitator</h2>
 
-Fotis Psallidas is a PhD Candidate in the Computer Science department supervised by Eugene Wu. His research interests include data visualizations and data provenance for interactive systems. Contact Information:
+Fotis Psallidas is a PhD Candidate in the Computer Science department supervised by professor Eugene Wu. His research interests include data visualizations and data provenance for interactive systems. Contact Information:
 
 <ul>
     <li> Email: <b>fotis@cs.columbia.edu</b></li>

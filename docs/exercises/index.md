@@ -21,7 +21,7 @@ to translate to SQL queries and run against the OpenFlights database. The questi
 <p style="font-size: 11pt; text-align: justify">
 The questions vary in complexity. Make sure to answer the following questions: <b>Q1-Q9, Q13-Q16, Q21-Q24</b>. The rest of the questions require some familiarity with SQL. So, target them if you finish the questions above. 
 <br/><br/>
-<span style="color:red; font-weight:bolder;">Note</span>: You do not need to finish all questions during the hands-on session. Whichever questions you do not reply, try to answer them at your own convenience. Let the instructor know for any of your questions over email.
+<span style="color:red; font-weight:bolder;">Note</span>: You do not need to finish all questions during the hands-on session. Whichever questions you do not reply, try to answer them at your own convenience. Let the workshop facilitator know for any of your questions over email.
 </p>
 </div>
 

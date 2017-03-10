@@ -71,8 +71,9 @@ TABLE routes (
    FOREIGN KEY (alid)     REFERENCES airlines(alid)
 );
 Note that the above is a subset of the schema of the actual OpenFlights database. 
-Q0. Some domains above can be optimized. Can you suggest some other domains? Answer this question at your own convinience after the hands-on session. 
+ 
 ```
+**Q0. Some domains above can be optimized. Can you suggest some other domains? Answer this question at your own convinience after the hands-on session.**
 
 ### <a name="s1"></a><u>1. GET FAMILIAR WITH THE CONTENTS OF THE DATABASE</u>
 

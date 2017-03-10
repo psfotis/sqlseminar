@@ -5,8 +5,8 @@ comments: false
 
 <div class="jumbotron" style="background-color: #F4FDFD">
 <p style="font-size: 11pt; text-align: justify">
-Lets start querying the flightsdb. In this page you will find many questions that you need
-to translate to SQL queries and run against the flightsdb database. The questions are categorized into 6 sections:
+Lets start querying the OpenFlights database. In this page you will find many questions that you need
+to translate to SQL queries and run against the OpenFlights database. The questions are categorized into 6 sections:
 </p>
 
 <ol>

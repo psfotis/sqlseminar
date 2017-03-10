@@ -132,7 +132,7 @@ WHERE  ...
 
 **Q15. Find the number of routes for each source airport. Project only the number of routes and corresponding id of the airport (i.e., src_apid). Order the results by decreasing number of routes.**
 
-**Q16. Find the average,  max, min, and standard deviation of routes operated by American Airlines across cities in the United States. You need to account only for routes with source airport located in a city in the United States.** Hint: First, write a SQL query to find the number of routes per city in the United States operated by American Airlines. Again, account only for routes with source airport located in a city in the United States. Then, use this query as a nested subquery to calculate the average, max, min, and standard deviation.
+**Q16. Find the average,  max, and min routes operated by American Airlines across cities in the United States. You need to account only for routes with source airport located in a city in the United States.** Hint: First, write a SQL query to find the number of routes per city in the United States operated by American Airlines. Again, account only for routes with source airport located in a city in the United States. Then, use this query as a nested subquery to calculate the average, max, min, and standard deviation.
 
 
 **Q17. Find the number of routes that have as destination the JFK airport.**

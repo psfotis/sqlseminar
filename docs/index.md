@@ -42,13 +42,13 @@ layout: template1
     <li> a database client with a graphical user interface such as <a href="http://dbeaver.jkiss.org/">DBeaver</a>. </li>
     </ul>
 
-    Participants that are not confident or have troubles with the installation can schedule a meeting with the instructor before the seminar to go though the installation.
+    Participants that are not confident or have troubles with the installation can schedule a meeting with the workshop facilitator before the seminar to go though the installation.
 </div>
 
 
 <div class="jumbotron">
 
-<h2>Instructor</h2>
+<h2>Workshop Facilitator</h2>
 
 Fotis Psallidas is a PhD Candidate in the Computer Science department supervised by Eugene Wu. His research interests include data visualizations and data provenance for interactive systems. Contact Information:
 

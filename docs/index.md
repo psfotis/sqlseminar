@@ -3,14 +3,14 @@ layout: template1
 ---
 
 <div class="jumbotron" >
-    <p style="text-align: justify">SQL is a powerful query language that provides the necessary constructs for data definition and manipulation with a goal set to empower a variety of real-world applications with data-centric tasks. In this seminar, participants will go through the basic SQL constructs and will learn how to construct and execute SQL queries against relation database management systems.</p>
+    <p style="text-align: justify">SQL is a powerful query language that provides the necessary constructs for data definition and manipulation with a goal set to empower a variety of real-world applications with data-centric tasks. In this seminar, participants will go through the basic SQL constructs and will learn how to construct and execute SQL queries against relational database management systems.</p>
 </div>
 
 
 <div class="jumbotron" style="background-color: #E0FFC5">
         <h2>Main takeaways</h2>
         <ul>
-        <li> Background on the relation model and relational database management systems </li>
+        <li> Background on the relational model and relational database management systems </li>
         <li> Creating and modifying relations using SQL </li>
         <li> Basic SELECT-FROM-WHERE statements </li>
             <ul>
